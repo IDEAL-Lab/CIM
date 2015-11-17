@@ -1,1 +1,1 @@
-# Continuous Influence Maximization (SIGMOD 2016)
+## Continuous Influence Maximization (SIGMOD 2016)
