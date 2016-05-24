@@ -46,6 +46,7 @@ namespace InfluenceMaximization
 		public Tuple<List<int>, double> Greedy(int k)
 		{
 			HashSet<int> seeds = new HashSet<int> ();
+			HashSet<int> hyperEdges = new HashSet<int> ();
 			List<int> seedSet = new List<int> ();
 			List<int> degree = new List<int> ();
 			for (int u = 0; u < numV; ++u) 
@@ -66,11 +67,15 @@ namespace InfluenceMaximization
 				sum += degree [v];
 				foreach (int sid in V2S[v]) 
 				{
-						foreach (int uid in S2V[sid]) 
-						{
-							if(seeds.Contains(uid) == false)
-								degree [uid]--;
-						}
+					if (!hyperEdges.Contains(sid))
+		                    	{
+		                        	foreach (int uid in S2V[sid])
+		                        	{
+		                            		if (seeds.Contains(uid) == false)
+		                                		degree[uid]--;
+		                        	}
+		                        	hyperEdges.Add(sid);
+		                    	}
 				}
 				degree [v] = 0;
 			}
