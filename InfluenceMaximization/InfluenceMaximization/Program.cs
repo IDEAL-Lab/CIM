@@ -251,7 +251,7 @@ namespace InfluenceMaximization
                 Tuple<double, double> CD_tup = icm.InfluenceSpread(graph, CD_P, GlobalVar.MC);
 
                 double Numerator = 2 * graph.numV * (1 - 1.0 / Math.E) * (Math.Log(Cnk(graph.numV, (int)B)) + Math.Log(graph.numV) + Math.Log(2.0));
-                double appro = 1 - 1.0 / Math.E - Math.Sqrt(Numerator / (IM_tup.Item1*4.0*(double)GlobalVar.mH));
+                double appro = 1 - 1.0 / Math.E - Math.Sqrt(Numerator / (IM_tup.Item1*(double)GlobalVar.mH));
                 writer.WriteLine("B=" + B);
                 writer.WriteLine("IM:\t" + IM_tup.Item1 + "\t" + IM_tup.Item2 + "\t" + IM_ts + "\t" + appro);
                 writer.WriteLine("UC:\t" + UC_tup.Item1 + "\t" + UC_tup.Item2 + "\t" + UC_ts);
