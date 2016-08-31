@@ -34,6 +34,8 @@ namespace InfluenceMaximization
                         break;
                 }
                 Console.WriteLine(line);
+
+
                 FunPath = line;
 
                 while ((line = ConfigReader.ReadLine()) != null)
@@ -91,6 +93,14 @@ namespace InfluenceMaximization
                 }
                 Console.WriteLine(line);
                 GlobalVar.End = int.Parse(line);
+
+                while ((line = ConfigReader.ReadLine()) != null)
+                {
+                    if (line.ElementAt(0) != '#' && line != "")
+                        break;
+                }
+                Console.WriteLine(line);
+                GlobalVar.b = double.Parse(line);
                 ConfigReader.Close();
 
                 Graph graph = new Graph(GraphPath);
@@ -114,7 +124,7 @@ namespace InfluenceMaximization
 
         public static void CoordinateDescentAlgCommonHyperGraphOneAlpha(Graph graph, List<int> Type, string RsltDir)
         {
-            double b = 0.05; // Step of c of searching the best discount in th Unified Discount Algorithm
+            double b = GlobalVar.b; // Step of c of searching the best discount in th Unified Discount Algorithm
             double alpha = GlobalVar.Alpha;
             string Dir = RsltDir + "/Alpha=" + alpha;
             string Path = Dir + "/AllResults.txt";
@@ -130,6 +140,8 @@ namespace InfluenceMaximization
             {
                 List<int> rSet = icm.RR(graph).ToList();
                 RR.Add(rSet);
+                if (r > 0 && r % 100000 == 0)
+                    Console.WriteLine(r + " samples");
             }
             Bipartite bg = new Bipartite(RR, graph.numV);
             DateTime Hyper_end = DateTime.Now;
@@ -137,10 +149,14 @@ namespace InfluenceMaximization
             Console.WriteLine("Hyper-graph has been built");
 
             writer.WriteLine("Hyper-graph time:\t" + Hyper_time);
+            writer.Flush();
 
             for (int ind = GlobalVar.St; ind <= GlobalVar.End; ++ind)
             {
                 double B = ind * 10.0;
+
+                bg.Greedy((int)B);
+
 
                 // Unified Discount Algorithm
                 DateTime startTime = DateTime.Now;
@@ -234,8 +250,10 @@ namespace InfluenceMaximization
                 Tuple<double, double> UC_tup = icm.InfluenceSpread(graph, UC_P, GlobalVar.MC);
                 Tuple<double, double> CD_tup = icm.InfluenceSpread(graph, CD_P, GlobalVar.MC);
 
+                double Numerator = 2 * graph.numV * (1 - 1.0 / Math.E) * (Math.Log(Cnk(graph.numV, (int)B)) + Math.Log(graph.numV) + Math.Log(2.0));
+                double appro = 1 - 1.0 / Math.E - Math.Sqrt(Numerator / (IM_tup.Item1*4.0*(double)GlobalVar.mH));
                 writer.WriteLine("B=" + B);
-                writer.WriteLine("IM:\t" + IM_tup.Item1 + "\t" + IM_tup.Item2 + "\t" + IM_ts);
+                writer.WriteLine("IM:\t" + IM_tup.Item1 + "\t" + IM_tup.Item2 + "\t" + IM_ts + "\t" + appro);
                 writer.WriteLine("UC:\t" + UC_tup.Item1 + "\t" + UC_tup.Item2 + "\t" + UC_ts);
                 writer.WriteLine("CD:\t" + CD_tup.Item1 + "\t" + CD_tup.Item2 + "\t" + CD_ts);
                 writer.Flush();
@@ -321,6 +339,15 @@ namespace InfluenceMaximization
             return tup;
         }
 
+        public static double Cnk(int n, int k)
+        {
+            double ans = 1.0;
+            for (int i = 0; i < k; ++i)
+            {
+                ans *= (double)(n - i) / (double)(i + 1);
+            }
+            return ans;
+        }
     }
 
 }
