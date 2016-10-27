@@ -125,14 +125,14 @@ namespace InfluenceMaximization
 					else 
 					{
 						double sum = 0;
-                        if (i == 0)
-                            sum = V2S[max_u].Count * P[max_u];
-                        else
-                        {
-                            foreach (int sid in V2S[max_u])
-                                sum += edgeW[sid] * P[max_u];
-                        }
-                        VNode n1 = new VNode (max_u, sum);
+						if (i == 0)
+						    sum = V2S[max_u].Count * P[max_u];
+						else
+						{
+						    foreach (int sid in V2S[max_u])
+							sum += edgeW[sid] * P[max_u];
+						}
+						VNode n1 = new VNode (max_u, sum);
 						pq.Push (n1);
 						update [max_u] = true;
 					}
