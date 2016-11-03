@@ -12,7 +12,7 @@ ysteps <- c(100, 100, 100, 100, 200, 200, 500, 500, 500, 1000, 4000, 10000, 2000
 
 genfic <- function(dirname, discount, y_high, y_step) {
   # main procedure
-  loc <- paste('./evaluation/', dirname, sep='')
+  loc <- paste('./evaluation(0.85,0.05)/', dirname, sep='')
   
   fres <- paste(loc, '/Alpha=', discount, '/Fig3.txt', sep = '')
   dres <- read.csv(fres, sep=' ', stringsAsFactors=F, strip.white=TRUE)

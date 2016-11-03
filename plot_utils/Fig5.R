@@ -13,7 +13,7 @@ yhighs <- c(700, 700, 700, 2800, 2800, 2800, 7000, 7000, 7000, 120000, 120000, 1
 
 genfic <- function(dirname, discount, y_low, y_high) {
   # main procedure
-  loc <- paste('./evaluation/', dirname, sep='')
+  loc <- paste('./evaluation/(0.85,0.05)', dirname, sep='')
   
   fres <- paste(loc, '/Alpha=', discount, '/Fig5.txt', sep = '')
   dres <- read.csv(fres, sep=' ', stringsAsFactors=F, strip.white=TRUE)

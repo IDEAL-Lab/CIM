@@ -11,7 +11,7 @@ discounts <- c('0.7', '0.85', '1')
 
 # main procedure
 genfic <- function(dirname, discount) {
-  loc <- paste('./evaluation/', dirname, sep='')
+  loc <- paste('./evaluation(0.85,0.05)/', dirname, sep='')
   
   fres <- paste(loc, '/Alpha=', discount, '/Fig4.txt', sep = '')
   dres <- read.csv(fres, sep=' ', stringsAsFactors=F, strip.white=TRUE)
