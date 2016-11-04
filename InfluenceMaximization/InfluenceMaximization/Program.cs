@@ -161,7 +161,7 @@ namespace InfluenceMaximization
                 // Unified Discount Algorithm
                 DateTime startTime = DateTime.Now;
                 List<Tuple<List<int>, double>> Res = new List<Tuple<List<int>, double>>();
-                for (int i = 1; i <= 20; ++i)
+                for (int i = 1; i*b - 1.0 <= 1e-4; ++i)
                 {
                     double c = i * b;
                     Tuple<List<int>, double> tup = UnifiedCGreedy(graph, bg, Type, c, B, alpha);
