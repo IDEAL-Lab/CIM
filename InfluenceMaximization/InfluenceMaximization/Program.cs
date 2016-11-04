@@ -283,6 +283,11 @@ namespace InfluenceMaximization
                 cWriter.Close();
             }
             writer.Close();
+            
+            ProcessData4Visual.Fig3(Path, Dir + "/Fig3.txt");
+            ProcessData4Visual.Fig4(Path, Dir + "/Fig4.txt");
+            ProcessData4Visual.Fig5(Dir + "/curve_c(50).txt", Dir + "/Fig5.txt");
+            ProcessData4Visual.Fig6(Path, Dir + "/Fig6.txt");
         }
 
         public static Tuple<List<int>, double> UnifiedCGreedy(Graph graph, List<int> Type, double c, double B, double alpha)
